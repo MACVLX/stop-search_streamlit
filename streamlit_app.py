@@ -13,21 +13,14 @@ import json
 import pickle
 
 from custom_transformers_3.transformer import * 
-
+from valid_categories import *
+from Exploratory import ExploratoryAnalysis
 
 # Data Viz Pkgs
 import matplotlib.pyplot as plt 
 import matplotlib
 matplotlib.use('Agg')
 
-# DB
-# from managed_db import *
-
-
-# Load ML Models
-def load_model(model_file):
-	loaded_model = joblib.load(open(os.path.join(model_file),"rb"))
-	return loaded_model
 
 
 # ML Interpretation
@@ -89,7 +82,7 @@ prescriptive_message_temp ="""
 
 
 
-# @st.cache
+@st.cache
 def load_model():
 	with open('../columns_RF_opt_2.json') as fh:
 		columns = json.load(fh)
@@ -103,59 +96,11 @@ def load_model():
 	return columns, pipeline, dtypes
 
 @st.cache
-def load_image(img):
-	im =Image.open(os.path.join(img))
-	return im
+def load_train_df():
+	URL = 'https://storage.googleapis.com/capstone4ldsaa/train.csv'
+	df = pd.read_csv(URL)
 	
-
-def change_avatar(sex):
-	if sex == "male":
-		avatar_img = 'img_avatar.png'
-	else:
-		avatar_img = 'img_avatar2.png'
-	return avatar_img
-
-valid_category_map = {
-        "Type": [None,'Person search', 'Person and Vehicle search', 'Vehicle search'],
-        'Part of a policing operation':[None, True, False],
-        'Gender':[None,'Male','Female','Other'],
-        'Age range':[None,'18-24', '25-34', 'over 34', '10-17', 'under 10'],
-        'Officer-defined ethnicity':[None,'Asian', 'White', 'Black', 'Other', 'Mixed'],  
-    'Legislation':[None,'Misuse of Drugs Act 1971 (section 23)', 
-                   'Police and Criminal Evidence Act 1984 (section 1)',
-                   'Psychoactive Substances Act 2016 (s36(2))',
-                   'Criminal Justice Act 1988 (section 139B)',
-                   'Firearms Act 1968 (section 47)',
-                   'Poaching Prevention Act 1862 (section 2)',
-                   'Criminal Justice and Public Order Act 1994 (section 60)',
-                   'Police and Criminal Evidence Act 1984 (section 6)',
-                   'Wildlife and Countryside Act 1981 (section 19)',
-                   'Psychoactive Substances Act 2016 (s37(2))',
-                   'Aviation Security Act 1982 (section 27(1))',
-                   'Protection of Badgers Act 1992 (section 11)',
-                   'Crossbows Act 1987 (section 4)',
-                   'Public Stores Act 1875 (section 6)',
-                   'Customs and Excise Management Act 1979 (section 163)',
-                   'Deer Act 1991 (section 12)',
-                   'Conservation of Seals Act 1970 (section 4)'], 
-    'Object of search':[None,'Controlled drugs',
-                        'Offensive weapons',
-                        'Stolen goods',
-                        'Article for use in theft',
-                        'Articles for use in criminal damage',
-                        'Firearms',
-                        'Anything to threaten or harm anyone',
-                        'Crossbows',
-                        'Evidence of offences under the Act',
-                        'Fireworks',
-                        'Psychoactive substances',
-                        'Game or poaching equipment',
-                        'Evidence of wildlife offences',
-                        'Detailed object of search unavailable',
-                        'Goods on which duty has not been paid etc.',
-                        'Seals or hunting equipment'],
-'station':[None,'devon-and-cornwall', 'dyfed-powys', 'derbyshire', 'bedfordshire', 'avon-and-somerset', 'cheshire', 'sussex', 'north-yorkshire', 'cleveland', 'merseyside', 'north-wales', 'wiltshire', 'norfolk', 'suffolk', 'thames-valley', 'durham', 'warwickshire', 'leicestershire', 'hertfordshire', 'cumbria', 'metropolitan', 'essex', 'south-yorkshire', 'surrey', 'staffordshire', 'northamptonshire', 'northumbria', 'city-of-london', 'nottinghamshire', 'gloucestershire', 'cambridgeshire', 'lincolnshire', 'btp', 'west-yorkshire', 'dorset', 'west-mercia', 'kent', 'hampshire', 'humberside', 'lancashire', 'greater-manchester', 'gwent']
-}
+	return df
 
 
 def main():
@@ -163,7 +108,7 @@ def main():
 	
 	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
 
-	menu = ['Home',"Plot","Prediction","Metrics"]
+	menu = ['Home',"EDA","Use Model","Metrics"]
 
 	choice = st.sidebar.selectbox("Menu",menu)
 	if choice == "Home":
@@ -181,12 +126,36 @@ def main():
 		# st.image(load_image('images/hepimage.jpeg'))
 
 
-	elif choice == "Plot":
-
-			# create_usertable()
-		st.subheader("Data Vis Plot")
-		# df = load_dataset("train.csv")
-		# st.dataframe(df)
+	elif choice == "EDA":
+		st.sidebar.subheader('Basic exploratory analysis')
+		# with st.sidebar.expander('Basic exploratory analysis options'):
+		try:
+			with st.spinner('Loading data....'):
+				df = load_train_df()
+				
+		except:
+			st.error('csv file upload error')
+		else:
+			st.success('Data loaded!')
+			
+			EA = ExploratoryAnalysis(df)
+			basics = st.sidebar.radio('',('Head','Describe','Info','Isnull','Unique values and frequency'))
+			if basics == 'Head':
+				st.subheader('Dataframe head:')
+				st.write(df.head(20))
+			elif basics == 'Describe':
+				st.subheader('Dataframe description:')
+				st.write(df.describe())
+			elif basics =='Info':
+				st.subheader('Dataframe informations:')
+				st.text(EA.info())
+			elif basics =='Isnull':
+				st.subheader('Null occurrences')
+				st.write(df.isnull().sum())
+			elif basics == 'Unique values and frequency':
+				col = st.sidebar.selectbox('Choose a column for see unique values',EA.columns)
+				st.subheader('Unique values and frequency')
+				st.write(EA.info2(col))
 
 		# df['Outcome'].value_counts().plot(kind='bar')
 		# st.pyplot()	
@@ -204,7 +173,7 @@ def main():
 						
 
 
-	elif choice== "Prediction":
+	elif choice == "Use Model":
 
 
 		st.subheader("Predictive Analytics")
@@ -347,6 +316,6 @@ def main():
 
 
 
-
+	st.sidebar.markdown("with contributions from: [Source code](https://github.com/rafaelloni/EAT_app)")
 if __name__ == '__main__':
 	main()
