@@ -22,10 +22,10 @@ class ExploratoryAnalysis:
         df = self.df[column_target].value_counts().to_frame().reset_index()
         df_1 = self.df[column_target].value_counts().to_frame().reset_index()
         df_2 = self.df[column_target].value_counts(normalize=True).to_frame().reset_index()
-# df.sort_values(by='index', inplace=True, ignore_index=True)
         df=df_1.merge(df_2, on='index')
         df.rename(columns={'index':column_target, df.columns[1]:"Frequency",df.columns[2]:"Normalized"}, inplace=True,)
         return df
+
 
     def CountPlot(self, column_target, hue=None):
         sns.set(style="darkgrid")

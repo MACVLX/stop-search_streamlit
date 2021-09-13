@@ -13,7 +13,7 @@ import json
 import pickle
 
 from custom_transformers_3.transformer import * 
-from valid_categories import *
+from utils import *
 from Exploratory import ExploratoryAnalysis
 
 # Data Viz Pkgs
@@ -22,6 +22,7 @@ import matplotlib
 matplotlib.use('Agg')
 
 
+from multiapp import MultiApp
 
 # ML Interpretation
 import lime
@@ -103,17 +104,19 @@ def load_train_df():
 	return df
 
 
+	
+
 def main():
 	"""Hep Mortality Prediction App"""
 	
 	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
+	
 
 	menu = ['Home',"EDA","Use Model","Metrics"]
 
 	choice = st.sidebar.selectbox("Menu",menu)
 	if choice == "Home":
-		st.subheader("Home")
-		
+				
 		st.markdown("""
 	<div style="background-color:silver;overflow-x: auto; padding:10px;border-radius:5px;margin:10px;">
 		<h3 style="text-align:justify;color:black;padding:10px">Project overview</h3>
@@ -121,41 +124,57 @@ def main():
 	</div>
 	""",unsafe_allow_html=True)
 
-		st.checkbox('open overview')
+		st.markdown("This multi-page app is using the streamlit-multiapps framework developed by Praneel Nihar. Also check out his [Medium]('https://medium.com/@u.praneel.nihar/building-multi-page-web-app-using-streamlit-7a40d55fa5b4') article.")
 	
 		# st.image(load_image('images/hepimage.jpeg'))
 
 
 	elif choice == "EDA":
-		st.sidebar.subheader('Basic exploratory analysis')
+
 		# with st.sidebar.expander('Basic exploratory analysis options'):
 		try:
 			with st.spinner('Loading data....'):
-				df = load_train_df()
-				
+				df = load_train_df()				
 		except:
 			st.error('csv file upload error')
 		else:
-			st.success('Data loaded!')
-			
 			EA = ExploratoryAnalysis(df)
-			basics = st.sidebar.radio('',('Head','Describe','Info','Isnull','Unique values and frequency'))
-			if basics == 'Head':
+			st.sidebar.markdown('#### Exploratory analysis')
+			features=st.sidebar.radio("",['Head','Describe','Info','Data entry issues','Unique values and frequency',  'Gender, Ethnicity and Age'])
+			# basics = st.sidebar.radio('',('Head','Describe','Info','Data entry issues'))
+			if features == 'Head':
 				st.subheader('Dataframe head:')
 				st.write(df.head(20))
-			elif basics == 'Describe':
+				st.markdown("For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country. This dataset is composed of features that can be used for modelling -  'Type', 'Date', 'Part of a policing operation', 'Latitude', 'Longitude', 'Gender', 'Age range', 'Self-defined ethnicity', 'Officer-defined ethnicity', 'Legislation','Object of search', 'station' - by features which will be used to build a classification target given there isn’t a specific ‘target’ or ‘ label’ feature - 'Outcome', 'Outcome linked to object of search' - and by the feature  'Removal of more than just outer clothing',  to be used in the analysis only. As previously mentioned a search is considered successful if the outcome is positive and is related to the search. Except for ‘Latitude’ and ‘Longitude’, all the others are categorical variables.")
+			elif features == 'Describe':
 				st.subheader('Dataframe description:')
 				st.write(df.describe())
-			elif basics =='Info':
+			elif features =='Info':
 				st.subheader('Dataframe informations:')
 				st.text(EA.info())
-			elif basics =='Isnull':
-				st.subheader('Null occurrences')
-				st.write(df.isnull().sum())
-			elif basics == 'Unique values and frequency':
-				col = st.sidebar.selectbox('Choose a column for see unique values',EA.columns)
+			# elif basics =='Isnull':
+			# 	st.subheader('Null occurrences')
+			# 	st.write(df.isnull().sum())
+			elif features == 'Unique values and frequency':
+				col = st.selectbox('Choose a column for see unique values',EA.columns)
 				st.subheader('Unique values and frequency')
 				st.write(EA.info2(col))
+			elif features == 'Data entry issues':
+				st.write('Data entry issues')
+				st.image('images/overhaul_nulls.png')
+				st.markdown('There seems to be some issues regarding data entries although in general most of the dataset is quite well populated. Maybe not surprisingly, the London metropolitan station accounts for more than 50% of all the data points in this dataset.')
+				st.markdown('In regards to missing data across all stations, the columns ‘Outcome linked to object of search’ and ‘Removal of more than just outer clothing’ are the most affected')
+				st.image('images/%_nulls.png')
+				st.markdown("A more granular analysis by police station allows for in depth appraisal of the reality of record keeping per  station (Annex 3). Some stations are top exemplar  - essex, suffolk, sussex, northamptonshire, norfolk and gloucester - with near 0% of data missing whereas other stations like thames-valley, lancashire and dyfed-powys have severe data keeping records with more than 30% of data missing, particularly in respect to geolocation, information if it was part of police operation and the two above mentioned categories. The most severe issue pertaining to missing data is related to the feature ‘Outcome linked to object of search’ in the metropolitan station. There is no data at all, which will disallow these data points to be included in any modelling attempt and impair any statistical analysis related to outcome in this important area of the country. The station gwent and humberside also have no data in this feature. Another worrying fact related to this project is the almost entire lack of report regarding the removal of outer clothing. Some stations like gwent, cleveland, north-yorkshire, metropolitan and surrey do not report this information  at all and many others have less than 50% reporting in this category. For some columns it makes sense to infer the missing data, for example in ‘Outcome linked to object of search’ any missing values are most likely to be False since officers tend to forget to go back to the application.There seems to be a substantial amount of records where ‘Outcome’ is negative but the column ‘Outcome linked to the object of search is True. This indicates potential compromise when training any model as these data points may be of no use. In figure 3 we can clearly see that some stations (warwickshire,btp,west-yorkshire and derbyshire) have more than 50% of observations with this mismatch. As mentioned the features ‘Outcome’ and 'Outcome linked to object of search' will be used to build our target labels for binary classification. The latter is a boolean feature with True or False values. The Outcome feature is a wide range of consequences from arrestas to penalties or mere caution but the vast majority is that no action was taken.  After constructing the target feature we achieve an imbalanced dataset where the positive outcome accounts for approximately 20% of the observations. By removing the stations where the target is not possible to be constructed (metropolitan, gwent and humberside) the  final data set is only 46% of the original data.")
+
+			elif features == 'Gender, Ethnicity and Age':
+				st.write("Gender, Ethnicity and Age groups distribution of stops can be seen in the chart below. The Gender feature has 3 categories: Female, Male and Other. Given that the representativity of ‘other’ is extremely low in the dataset (less than 0.001%) we will exclude this from our analysis and modelling. There is an over representativity of Male compared to Female. Females account for little more than 8% but if the metropolitan station is removed then it increases slightly to more than 10%. In regards to Ethnic groups we have 2 different features: Officer defined and self-defined. For modelling purposes it only makes sense to use the Officer-defined feature as this is the only information present prior to any decision making. By far the majority is composed of ‘white’ subgroups making white man the most stopped.The age brackets recorded show a majority of young adults between 18 and 34 years old. Possibly of concern is the fact that there are 384 occurrences of children aged less than 10 years old.")
+				st.image('images/stops_per_group.png')
+				st.write("In regards to ethnicity we also investigated if there was any significant discrepancy between Officer-defined  and self-defined reported values.  Although not significant, it seems that officers tend to dismiss the categories 'Mixed' and 'Other' , distributing them more across 'White' and 'Black' categories")
+				st.image('images/Match between self-defined and police-defined ethnicity.png')
+
+
+
 
 		# df['Outcome'].value_counts().plot(kind='bar')
 		# st.pyplot()	
