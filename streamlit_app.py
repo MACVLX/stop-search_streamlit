@@ -25,8 +25,8 @@ matplotlib.use('Agg')
 from multiapp import MultiApp
 
 # ML Interpretation
-import lime
-import lime.lime_tabular
+# import lime
+# import lime.lime_tabular
 
 
 html_temp = """
