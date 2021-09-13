@@ -201,13 +201,29 @@ def main():
 			elif features == 'Lat & Long':
 				st.subheader('Coordinates of operations')
 				# Calculate the timerange for the slider
-				min_ts = datetime.datetime.strptime(min(df["Date"]), "%Y-%m-%d")
-				max_ts = datetime.datetime.strptime(max(df["Date"]), "%Y-%m-%d")
+				
+				df=df.rename(columns={'Latitude':'lat','Longitude':'lon'})
+				df_coord=df[(~df.lat.isna()) & (~df.lon.isna())]
+				# # Calculate the timerange for the slider
+				
+				df_coord['Date'] = pd.to_datetime(df_coord['Date']).dt.date
+				
 
-				st.sidebar.subheader("Inputs")
-				min_selection, max_selection = st.sidebar.slider("Timeline", min_value=min_ts, max_value=max_ts, value=[min_ts, max_ts]
-)
-				# st.map()
+				min_ts = df_coord['Date'].min()#.date()
+				max_ts = df_coord['Date'].max()#.date()
+				
+
+				# st.subheader("Inputs")
+				min_selection, max_selection = st.slider(
+					"Timeline", min_value=min_ts, max_value=max_ts, value=[min_ts, max_ts])
+				# # Filter Data based on selection
+				st.write(f"Filtering between {min_ts} & {max_ts}")
+				time_data = df_coord[
+					(df_coord["Date"] >= min_selection) & (df_coord["Date"] <= max_selection)
+				]
+				
+				st.map(time_data)
+
 
 
 
