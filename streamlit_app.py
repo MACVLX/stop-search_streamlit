@@ -123,9 +123,6 @@ def main():
 		<p>A summary of the project premisses, objectives and requirements.</p>
 	</div>
 	""",unsafe_allow_html=True)
-
-		st.markdown("This multi-page app is using the streamlit-multiapps framework developed by Praneel Nihar. Also check out his [Medium]('https://medium.com/@u.praneel.nihar/building-multi-page-web-app-using-streamlit-7a40d55fa5b4') article.")
-	
 		# st.image(load_image('images/hepimage.jpeg'))
 
 
@@ -335,6 +332,8 @@ def main():
 
 
 
-	st.sidebar.markdown("with contributions from: [Source code](https://github.com/rafaelloni/EAT_app)")
+	st.sidebar.markdown("with contributions from:")
+	st.sidebar.markdown('[https://github.com/rafaelloni/EAT_app](https://github.com/rafaelloni/EAT_app)')
+	st.sidebar.markdown('[https://github.com/upraneelnihar/streamlit-multiapps](https://github.com/upraneelnihar/streamlit-multiapps)')
 if __name__ == '__main__':
 	main()
