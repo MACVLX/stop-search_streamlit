@@ -36,9 +36,7 @@ html_temp = """
 		</div>
 		"""
 
-# Avatar Image using a url
-avatar1 ="https://www.w3schools.com/howto/img_avatar1.png"
-avatar2 ="https://www.w3schools.com/howto/img_avatar2.png"
+
 
 result_temp ="""
 	<div style="background-color:#464e5f;padding:10px;border-radius:10px;margin:10px;">
@@ -79,6 +77,41 @@ prescriptive_message_temp ="""
 	</div>
 	"""
 
+footer="""<style>
+a:link , a:visited{
+color: blue;
+background-color: transparent;
+text-decoration: underline;
+font-size: x-small;
+}
+
+a:hover,  a:active {
+color: red;
+background-color: transparent;
+text-decoration: underline;
+font-size: x-small;
+}
+
+.footer {
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
+background-color: white;
+color: black;
+text-align: center;
+font-size: xx-small;
+
+}
+</style>
+<div class="footer"; >
+<a style='display: block; text-align: center;' 
+ target="_blank">Developed by Miguel Vieira</a>
+<a>with contributions from:</a>
+<a style='display: block; text-align: center;' target="_blank", href='https://github.com/rafaelloni/EAT_app'>https://github.com/rafaelloni/EAT_app</a>
+<p> <a style='display: block; text-align: center;' target="_blank", href='https://github.com/upraneelnihar/streamlit-multiapps'>https://github.com/upraneelnihar/streamlit-multiapps</a></p>
+</div>
+"""
 
 
 
@@ -110,7 +143,7 @@ def main():
 	"""Hep Mortality Prediction App"""
 	
 	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
-	
+	st.sidebar.markdown(footer,unsafe_allow_html=True)
 
 	menu = ['Home',"EDA","Use Model","Metrics"]
 
@@ -332,8 +365,6 @@ def main():
 
 
 
-	st.sidebar.markdown("with contributions from:")
-	st.sidebar.markdown('[https://github.com/rafaelloni/EAT_app](https://github.com/rafaelloni/EAT_app)')
-	st.sidebar.markdown('[https://github.com/upraneelnihar/streamlit-multiapps](https://github.com/upraneelnihar/streamlit-multiapps)')
+
 if __name__ == '__main__':
 	main()
