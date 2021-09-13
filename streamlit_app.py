@@ -1,7 +1,5 @@
-# Core Pkgs
 import streamlit as st 
 
-# EDA Pkgs
 import pandas as pd 
 import numpy as np 
 
@@ -11,6 +9,7 @@ import os
 import joblib 
 import json
 import pickle
+import datetime
 
 from custom_transformers_3.transformer import * 
 from utils import *
@@ -20,13 +19,6 @@ from Exploratory import ExploratoryAnalysis
 import matplotlib.pyplot as plt 
 import matplotlib
 matplotlib.use('Agg')
-
-
-from multiapp import MultiApp
-
-# ML Interpretation
-# import lime
-# import lime.lime_tabular
 
 
 html_temp = """
@@ -109,10 +101,10 @@ font-size: xx-small;
  target="_blank">Developed by Miguel Vieira</a>
 <a>with contributions from:</a>
 <a style='display: block; text-align: center;' target="_blank", href='https://github.com/rafaelloni/EAT_app'>https://github.com/rafaelloni/EAT_app</a>
-<p> <a style='display: block; text-align: center;' target="_blank", href='https://github.com/upraneelnihar/streamlit-multiapps'>https://github.com/upraneelnihar/streamlit-multiapps</a></p>
+
 </div>
 """
-
+# <p> <a style='display: block; text-align: center;' target="_blank", href='https://github.com/upraneelnihar/streamlit-multiapps'>https://github.com/upraneelnihar/streamlit-multiapps</a></p>
 
 
 
@@ -137,7 +129,13 @@ def load_train_df():
 	return df
 
 
-	
+# set page layout
+st.set_page_config(
+    page_title="Stop & Search UK",
+    page_icon="",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)	
 
 def main():
 	"""Hep Mortality Prediction App"""
@@ -145,7 +143,7 @@ def main():
 	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
 	st.sidebar.markdown(footer,unsafe_allow_html=True)
 
-	menu = ['Home',"EDA","Use Model","Metrics"]
+	menu = ['Home',"EDA","Modelling",'Use Model']#,"Metrics"]
 
 	choice = st.sidebar.selectbox("Menu",menu)
 	if choice == "Home":
@@ -170,15 +168,13 @@ def main():
 		else:
 			EA = ExploratoryAnalysis(df)
 			st.sidebar.markdown('#### Exploratory analysis')
-			features=st.sidebar.radio("",['Head','Describe','Info','Data entry issues','Unique values and frequency',  'Gender, Ethnicity and Age'])
+			features=st.sidebar.radio("",['Head','Info','Data entry issues','Unique values and frequency',  'Gender, Ethnicity and Age', 'Lat & Long'])
 			# basics = st.sidebar.radio('',('Head','Describe','Info','Data entry issues'))
 			if features == 'Head':
 				st.subheader('Dataframe head:')
 				st.write(df.head(20))
 				st.markdown("For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country. This dataset is composed of features that can be used for modelling -  'Type', 'Date', 'Part of a policing operation', 'Latitude', 'Longitude', 'Gender', 'Age range', 'Self-defined ethnicity', 'Officer-defined ethnicity', 'Legislation','Object of search', 'station' - by features which will be used to build a classification target given there isn’t a specific ‘target’ or ‘ label’ feature - 'Outcome', 'Outcome linked to object of search' - and by the feature  'Removal of more than just outer clothing',  to be used in the analysis only. As previously mentioned a search is considered successful if the outcome is positive and is related to the search. Except for ‘Latitude’ and ‘Longitude’, all the others are categorical variables.")
-			elif features == 'Describe':
-				st.subheader('Dataframe description:')
-				st.write(df.describe())
+			
 			elif features =='Info':
 				st.subheader('Dataframe informations:')
 				st.text(EA.info())
@@ -202,6 +198,16 @@ def main():
 				st.image('images/stops_per_group.png')
 				st.write("In regards to ethnicity we also investigated if there was any significant discrepancy between Officer-defined  and self-defined reported values.  Although not significant, it seems that officers tend to dismiss the categories 'Mixed' and 'Other' , distributing them more across 'White' and 'Black' categories")
 				st.image('images/Match between self-defined and police-defined ethnicity.png')
+			elif features == 'Lat & Long':
+				st.subheader('Coordinates of operations')
+				# Calculate the timerange for the slider
+				min_ts = datetime.datetime.strptime(min(df["Date"]), "%Y-%m-%d")
+				max_ts = datetime.datetime.strptime(max(df["Date"]), "%Y-%m-%d")
+
+				st.sidebar.subheader("Inputs")
+				min_selection, max_selection = st.sidebar.slider("Timeline", min_value=min_ts, max_value=max_ts, value=[min_ts, max_ts]
+)
+				# st.map()
 
 
 
@@ -230,8 +236,6 @@ def main():
 			id = st.text_input("observation id")
 			
 			type = st.selectbox("Type",valid_category_map.get('Type'))
-			
-			import datetime
 			today = datetime.date.today()
 			try:
 				date = st.date_input("Date",today)
