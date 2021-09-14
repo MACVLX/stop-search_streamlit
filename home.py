@@ -2,7 +2,7 @@ import streamlit as st
 
 import pandas as pd 
 import numpy as np 
-
+import base64 as base64
 
 # Utils
 import os
@@ -44,7 +44,7 @@ st.set_page_config(
 
 
 
-import base64
+
 
 @st.cache(allow_output_mutation=True)
 def get_base64_of_bin_file(bin_file):
@@ -57,8 +57,13 @@ def set_png_as_page_bg(png_file):
     page_bg_img = '''
     <style>
     body {
+    color: white;
     background-image: url("data:image/png;base64,%s");
     background-size: cover;
+    background-color: white;
+    -webkit-tap-highlight-color: red;
+    -webkit-highlight-color: red;
+
     }
     </style>
     ''' % bin_str
@@ -68,10 +73,10 @@ def set_png_as_page_bg(png_file):
 
 
 
-
+set_png_as_page_bg('images/stopsearch2.png')
 
 def main():
-	set_png_as_page_bg('images/stopsearch.png')
+	
 	
 	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
 	st.sidebar.markdown(footer,unsafe_allow_html=True)
