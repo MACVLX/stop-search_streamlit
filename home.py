@@ -76,8 +76,7 @@ def main():
 	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
 	st.sidebar.markdown(footer,unsafe_allow_html=True)
 
-	# st.markdown("<p><img src='images/stopsearch.png'></p>",unsafe_allow_html=True)
-	st.image('images/stopsearch2.png')
+
 
 	# menu = ['Home',"EDA","Modelling",'Use Model']#,"Metrics"]
 	
