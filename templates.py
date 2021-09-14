@@ -14,13 +14,15 @@ html_temp = """
 # 		"""
 
 
-result_temp ="""
-	<div style="background-color:#464e5f;padding:10px;border-radius:10px;margin:10px;">
-	<h4 style="color:white;text-align:center;">Algorithm:: {}</h4>
-	<img src="images/stopsearch.png" alt="Avatar" style="vertical-align: middle;float:left;width: 50px;height: 50px;border-radius: 50%;" >
-	<br/>
-	<br/>	
-	<p style="text-align:justify;color:white">{} % probalibilty that Patient {}s</p>
+result_true ="""
+	<div style="background-color:green;padding:10px;border-radius:10px;margin:10px;width:200px;">
+	<h4 style="color:black;text-align:center;">SEARCH</h4>
+	</div>
+	"""
+
+result_false ="""
+	<div style="background-color:red;padding:10px;border-radius:10px;margin:10px;width:200px;">
+	<h4 style="color:white;text-align:center;">NO SEARCH</h4>
 	</div>
 	"""
 

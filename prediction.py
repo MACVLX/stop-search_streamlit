@@ -22,15 +22,15 @@ matplotlib.use('Agg')
 
 from templates import *
 
-@st.cache
+@st.cache(allow_output_mutation=True)
 def load_model():
-	with open('../columns_RF_opt_2.json') as fh:
+	with open('columns_RF_opt_2.json') as fh:
 		columns = json.load(fh)
 
-	with open('../pipeline_RF_opt_2.pickle', 'rb') as fh:
+	with open('pipeline_RF_opt_2.pickle', 'rb') as fh:
 		pipeline = joblib.load(fh)
 
-	with open('../dtypes_RF_opt_2.pickle', 'rb') as fh:
+	with open('dtypes_RF_opt_2.pickle', 'rb') as fh:
 		dtypes = pickle.load(fh)
 
 	return columns, pipeline, dtypes
@@ -93,4 +93,7 @@ def prediction():
 
             proba
             prediction = pipeline.predict(obs)[0]
-            prediction
+            if prediction == True:
+                st.markdown(result_true,unsafe_allow_html=True)
+            else:
+                st.markdown(result_false,unsafe_allow_html=True) 
