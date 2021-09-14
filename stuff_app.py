@@ -30,7 +30,7 @@ def set_png_as_page_bg(png_file):
     <style>
     body {
     color: white;
-    background-image: url("data:image/png;base64,%s");
+    background-image: %s;
     background-size: cover;
     background-color: white;
     -webkit-tap-highlight-color: red;
@@ -39,13 +39,21 @@ def set_png_as_page_bg(png_file):
     }
     </style>
     ''' % bin_str
-
+#url("data:image/png;base64,%s");
     st.markdown(page_bg_img, unsafe_allow_html=True)
     return
 
 # paste the image file name to reset your background image
-set_png_as_page_bg('stopsearch.png')
+# set_png_as_page_bg('stopsearch.png')
+st.markdown('''<style> 
+body {color: white;
+    background-image:'stopsearch.png';
+    background-size: cover;
+    background-color: white;
+    -webkit-tap-highlight-color: red;
+    -webkit-highlight-color: red;
 
+    }</style>''', unsafe_allow_html=True)
 
 html_temp = """
 <div style="background-color:{};height:{};width:{};">
