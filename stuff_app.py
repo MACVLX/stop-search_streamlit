@@ -44,7 +44,7 @@ def set_png_as_page_bg(png_file):
     return
 
 # paste the image file name to reset your background image
-set_png_as_page_bg('images/stopsearch2.png')
+set_png_as_page_bg('stopsearch.png')
 
 
 html_temp = """
