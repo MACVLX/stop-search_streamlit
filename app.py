@@ -1,9 +1,17 @@
 import streamlit as st
 from multiapp import  MultiApp
 
-from home import main #home, data_stats # import your app modules here
+from home import main 
 from EDA import EDA
 from prediction import prediction
+
+## set page layout
+# st.set_page_config(
+#     page_title="Stop & Search UK",
+#     page_icon="",
+#     layout="wide",
+#     initial_sidebar_state="expanded",
+# )	
 
 
 app = MultiApp()
@@ -14,13 +22,8 @@ app.add_app("EDA", EDA)
 app.add_app('Use Model', prediction)
 
 
-# # set page layout
-# st.set_page_config(
-#     page_title="Stop & Search UK",
-#     page_icon="",
-#     layout="wide",
-#     initial_sidebar_state="expanded",
-# )	
+
+
 
 # The main app
 app.run()

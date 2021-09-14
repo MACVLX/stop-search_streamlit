@@ -38,8 +38,7 @@ def load_model():
 
 
 def prediction():
-    st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
-    st.sidebar.markdown(footer,unsafe_allow_html=True)
+    st.markdown(html_temp,unsafe_allow_html=True)
     
     st.subheader("Predictive Analytics")
     with st.form("my_form"):

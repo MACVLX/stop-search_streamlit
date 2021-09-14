@@ -1,17 +1,23 @@
+import streamlit as st
+
+
 
 html_temp = """
-		<div style="background-color:{};padding:10px;border-radius:10px">
+		<div style="background-color:#FFCE54;padding:10px;border-radius:10px">
 		<h1 style="color:white;text-align:center;">Stop & Search UK app</h1>
-		
 		</div>
 		"""
-
+# html_temp = """
+# 		<div style="background-image:url("data:image/png;base64,{}");padding:10px;border-radius:10px">
+# 		<h1 style="color:white;text-align:center;">Stop & Search UK app</h1>
+# 		</div>
+# 		"""
 
 
 result_temp ="""
 	<div style="background-color:#464e5f;padding:10px;border-radius:10px;margin:10px;">
 	<h4 style="color:white;text-align:center;">Algorithm:: {}</h4>
-	<img src="https://www.w3schools.com/howto/img_avatar.png" alt="Avatar" style="vertical-align: middle;float:left;width: 50px;height: 50px;border-radius: 50%;" >
+	<img src="images/stopsearch.png" alt="Avatar" style="vertical-align: middle;float:left;width: 50px;height: 50px;border-radius: 50%;" >
 	<br/>
 	<br/>	
 	<p style="text-align:justify;color:white">{} % probalibilty that Patient {}s</p>

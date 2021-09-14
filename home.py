@@ -34,62 +34,45 @@ def load_train_df():
 	return df
 
 
-# set page layout
-st.set_page_config(
-    page_title="Stop & Search UK",
-    page_icon="",
-    layout="centered",
-    initial_sidebar_state="expanded",
-)	
 
+# @st.cache(allow_output_mutation=True)
+# def get_base64_of_bin_file(bin_file):
+#     with open(bin_file, 'rb') as f:
+#         data = f.read()
+#     return base64.b64encode(data).decode()
 
+# bin_str = get_base64_of_bin_file('images/stopsearch.png')
 
+# def set_png_as_page_bg(png_file):
+#     bin_str = get_base64_of_bin_file(png_file)
+#     page_bg_img = '''
+#     <style>
+#     body {
+#     color: white;
+#     background-image: url("data:image/png;base64,%s");
+#     background-size: cover;
+#     background-color: white;
+#     -webkit-tap-highlight-color: red;
+#     -webkit-highlight-color: red;
 
-
-@st.cache(allow_output_mutation=True)
-def get_base64_of_bin_file(bin_file):
-    with open(bin_file, 'rb') as f:
-        data = f.read()
-    return base64.b64encode(data).decode()
-
-def set_png_as_page_bg(png_file):
-    bin_str = get_base64_of_bin_file(png_file)
-    page_bg_img = '''
-    <style>
-    body {
-    color: white;
-    background-image: url("data:image/png;base64,%s");
-    background-size: cover;
-    background-color: white;
-    -webkit-tap-highlight-color: red;
-    -webkit-highlight-color: red;
-
-    }
-    </style>
-    ''' % bin_str
+#     }
+#     </style>
+#     ''' % bin_str
     
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-    return
+#     st.markdown(page_bg_img, unsafe_allow_html=True)
+#     return
 
 
 
-set_png_as_page_bg('images/stopsearch2.png')
+# set_png_as_page_bg('images/stopsearch.png')
 
 def main():
 	
 	
-	st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
+	st.markdown(html_temp,unsafe_allow_html=True)
 	st.sidebar.markdown(footer,unsafe_allow_html=True)
 
 
-
-	# menu = ['Home',"EDA","Modelling",'Use Model']#,"Metrics"]
-	
-
-
-	# choice = st.sidebar.selectbox("Menu",menu)
-	# if choice == "Home":
-				
 	# 	st.markdown("""
 	# <div style="background-color:silver;overflow-x: auto; padding:10px;border-radius:5px;margin:10px;">
 	# 	<h3 style="text-align:justify;color:black;padding:10px">Project overview</h3>

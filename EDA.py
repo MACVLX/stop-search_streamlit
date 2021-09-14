@@ -32,8 +32,8 @@ def load_train_df():
 
 
 def EDA():
-    st.markdown(html_temp.format('royalblue'),unsafe_allow_html=True)
-    st.sidebar.markdown(footer,unsafe_allow_html=True)  
+    st.markdown(html_temp,unsafe_allow_html=True)
+      
     try:
         with st.spinner('Loading data....'):
             df = load_train_df()				
@@ -42,23 +42,21 @@ def EDA():
     else:
         EA = ExploratoryAnalysis(df)
         st.sidebar.markdown('#### Exploratory analysis')
-        features=st.sidebar.radio("",['Head','Info','Data entry issues','Unique values and frequency',  'Gender, Ethnicity and Age', 'Lat & Long'])
-        # basics = st.sidebar.radio('',('Head','Describe','Info','Data entry issues'))
-        if features == 'Head':
-            st.subheader('Dataframe head:')
+        features=st.sidebar.radio("",['Overview','Data entry issues','Unique values and frequency',  'Gender, Ethnicity and Age', 'Lat & Long'])
+
+        if features == 'Overview':
+            st.subheader('Dataframe first rows:')
             st.write(df.head(20))
             st.markdown("For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country. This dataset is composed of features that can be used for modelling -  'Type', 'Date', 'Part of a policing operation', 'Latitude', 'Longitude', 'Gender', 'Age range', 'Self-defined ethnicity', 'Officer-defined ethnicity', 'Legislation','Object of search', 'station' - by features which will be used to build a classification target given there isn’t a specific ‘target’ or ‘ label’ feature - 'Outcome', 'Outcome linked to object of search' - and by the feature  'Removal of more than just outer clothing',  to be used in the analysis only. As previously mentioned a search is considered successful if the outcome is positive and is related to the search. Except for ‘Latitude’ and ‘Longitude’, all the others are categorical variables.")
         
-        elif features =='Info':
             st.subheader('Dataframe informations:')
             st.text(EA.info())
-        # elif basics =='Isnull':
-        # 	st.subheader('Null occurrences')
-        # 	st.write(df.isnull().sum())
+
         elif features == 'Unique values and frequency':
             col = st.selectbox('Choose a column for see unique values',EA.columns)
             st.subheader('Unique values and frequency')
             st.write(EA.info2(col))
+
         elif features == 'Data entry issues':
             st.write('Data entry issues')
             st.image('images/overhaul_nulls.png')

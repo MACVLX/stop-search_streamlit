@@ -10,7 +10,7 @@ sns.set_style('darkgrid')
 #import streamlit
 import streamlit as st
 #ignore warning 
-st.set_option('deprecation.showPyplotGlobalUse', False) 
+# st.set_option('deprecation.showPyplotGlobalUse', False) 
 
 #import necessary NLP libraries
 import nltk
