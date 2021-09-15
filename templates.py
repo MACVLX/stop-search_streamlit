@@ -16,14 +16,14 @@ html_temp = """
 
 
 result_true ="""
-	<div style="background-color:green;padding:10px;border-radius:10px;margin:10px;width:200px;">
+	<div style="background-color:green;padding:10px;border-radius:10px;margin:10px;width:auto;">
 	<h4 style="color:black;text-align:center;">SEARCH</h4>
 	</div>
 	"""
 
 result_false ="""
-	<div style="background-color:red;padding:10px;border-radius:10px;margin:10px;width:200px;">
-	<h4 style="color:white;text-align:center;">NO SEARCH</h4>
+	<div style="background-color:red;padding:10px;border-radius:10px;margin:10px;width:auto;">
+	<h4 style="color:white;text-align:center;">DON'T SEARCH</h4>
 	</div>
 	"""
 

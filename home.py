@@ -96,7 +96,7 @@ Although many possible types of offences might be incurred in this project we wi
 ''')
 	with st.expander('Data Analysis'):
 		st.write('''For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country.''')
-		st.write('##### Please use the "EDA" button on the sidebar on the left to navigate through a comprehensive analysis of the data')
+		st.write('##### Please use the "EDA" button on the sidebar to navigate through a comprehensive analysis of the data')
 
 	with st.expander('Business Questions analysis'):
 		
@@ -128,6 +128,15 @@ Although many possible types of offences might be incurred in this project we wi
 		# 		<img src=data:image/png;base64,{} style= width:40% float: right class='img-fluid'>
 		# 		<figcaption style=font-size:11 display: block>% removal of outer clothing asked to women per age range.</figcaption>
 		# 	</figure>'''.format(outer_cloth),unsafe_allow_html=True)
+	with st.expander('Modeling'):
+		st.write('''
+		
+		The model developed and improved over time will attempt to minimize the discrepancies in discovery rate across the ethnicity, age and gender subgroups. In the data that was made available, we couldn’t identify any major differences in said groups albeit in some particular stations. But evidently, we also do not know which individuals were left unsearched that potentially were breaking the law in some way. With this data, it has been very challenging to unify all stations in a single policy model whilst keeping the identified potentially problematic groups with no discrimination. We would thrive to achieve an overall discovery rate higher than the original data (20%) which would translate into an approximate global 28% success rate. It has been challenging to unify the rates within groups. At the moment our model will yield some significant differences in discovery rate across different stations. The global discovery rate of people that are stopped is expected to be around 26%. We believe that an acceptable difference rate within stations should not exceed 10% within any subgroup but this is proving very difficult to achieve perhaps because the available features are not that representative of particular culprit idiosyncrasies of offenders.  In some cases, we think that we actually have not improved upon the existing stopping criteria, for example in regards to the gender subgroup, but maybe we should, in the future, look to refine the models per station. We tested the best threshold for search and concluded that a good balance is that a person will only be searched if the model yields a 50% likelihood of success. We will be monitoring variables such as maximum and average differences in subgroups nationwide and will attempt to level these metrics with future refinements to the model. In regards to people that should be stopped, i.e., of the people that are actually ‘offending’ it is expectable that we get a high rate of stops around the 0.74 mark. This metric should also vary significantly across the stations. ''')
+
+		st.write("#### Use the 'Modeling' Button on the sidebar to navigate through a detailed perusal of the model achieved")
+
+
+	
 
 
 
