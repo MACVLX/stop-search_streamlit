@@ -91,6 +91,10 @@ Although many possible types of offences might be incurred in this project we wi
 		st.write('''For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country.''')
 		st.write('##### Please use the "EDA" button on the sidebar on the left to navigate through a comprehensive analysis of the data')
 
+	with st.expander('Business Questions analysis'):
+		st.write('The main question this report seeks to investigate is potential discrimination towards age, gender or ethnic groups across the stations and nationwide. To do this we looked at the current distribution of discovery rate of offences in these subgroups and across stations (excluding the ones where the target label couldn’t be attributed). The global discovery rate is at 20% as discussed but it varies greatly across the country.')
+		st.image('images/Distribution of discovery rate per station.png','Distribution of discovery rate per station.')
+
 
 
 
