@@ -32,7 +32,7 @@ def load_train_df():
 
 
 def EDA():
-    st.markdown(html_temp,unsafe_allow_html=True)
+    st.markdown(html_temp.format('Exploratory Analysis'),unsafe_allow_html=True)
       
     try:
         with st.spinner('Loading data....'):
