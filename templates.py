@@ -2,6 +2,7 @@ import streamlit as st
 
 
 
+
 html_temp = """
 		<div style="background-color:#3FB8AF;padding:10px;border-radius:10px">
 		<h1 style="color:black;text-align:center;">{}</h1>
@@ -26,34 +27,10 @@ result_false ="""
 	</div>
 	"""
 
-result_temp2 ="""
-	<div style="background-color:#464e5f;padding:10px;border-radius:10px;margin:10px;">
-	<h4 style="color:white;text-align:center;">Algorithm:: {}</h4>
-	<img src="https://www.w3schools.com/howto/{}" alt="Avatar" style="vertical-align: middle;float:left;width: 50px;height: 50px;border-radius: 50%;" >
-	<br/>
-	<br/>	
-	<p style="text-align:justify;color:white">{} % probalibilty that Patient {}s</p>
-	</div>
-	"""
-
-prescriptive_message_temp ="""
-	<div style="background-color:silver;overflow-x: auto; padding:10px;border-radius:5px;margin:10px;">
-		<h3 style="text-align:justify;color:black;padding:10px">Recommended Life style modification</h3>
-		<ul>
-		<li style="text-align:justify;color:black;padding:10px">Exercise Daily</li>
-		<li style="text-align:justify;color:black;padding:10px">Get Plenty of Rest</li>
-		<li style="text-align:justify;color:black;padding:10px">Exercise Daily</li>
-		<li style="text-align:justify;color:black;padding:10px">Avoid Alchol</li>
-		<li style="text-align:justify;color:black;padding:10px">Proper diet</li>
-		<ul>
-		<h3 style="text-align:justify;color:black;padding:10px">Medical Mgmt</h3>
-		<ul>
-		<li style="text-align:justify;color:black;padding:10px">Consult your doctor</li>
-		<li style="text-align:justify;color:black;padding:10px">Take your interferons</li>
-		<li style="text-align:justify;color:black;padding:10px">Go for checkups</li>
-		<ul>
-	</div>
-	"""
+img_html = '''<figure>
+				<img src='data:image/png;base64,{}' class='img-fluid' style="width:100%">
+				<figcaption>{}}</figcaption>
+			</figure>>'''
 
 footer="""<style>
 a:link , a:visited{
@@ -90,3 +67,4 @@ font-size: xx-small;
 </div>
 """
 # <p> </p>
+

@@ -2,7 +2,7 @@ import streamlit as st
 
 import pandas as pd 
 import numpy as np 
-import base64 as base64
+import base64 
 
 # Utils
 import os
@@ -13,6 +13,7 @@ import datetime
 
 from custom_transformers_3.transformer import * 
 from utils import *
+from templates import *
 from Exploratory import ExploratoryAnalysis
 
 # Data Viz Pkgs
@@ -21,10 +22,16 @@ import matplotlib
 matplotlib.use('Agg')
 
 
-from templates import *
 
 
 
+@st.cache(allow_output_mutation=True)
+def img_to_bytes(img_path):
+    with open(img_path, 'rb') as f:
+        img_bytes = f.read()
+    # img_bytes = Path(img_path).read_bytes()
+    encoded = base64.b64encode(img_bytes).decode()
+    return encoded
 
 @st.cache
 def load_train_df():
@@ -92,8 +99,35 @@ Although many possible types of offences might be incurred in this project we wi
 		st.write('##### Please use the "EDA" button on the sidebar on the left to navigate through a comprehensive analysis of the data')
 
 	with st.expander('Business Questions analysis'):
+		
 		st.write('The main question this report seeks to investigate is potential discrimination towards age, gender or ethnic groups across the stations and nationwide. To do this we looked at the current distribution of discovery rate of offences in these subgroups and across stations (excluding the ones where the target label couldn’t be attributed). The global discovery rate is at 20% as discussed but it varies greatly across the country.')
 		st.image('images/Distribution of discovery rate per station.png','Distribution of discovery rate per station.')
+		
+		st.write('#### Gender')
+		st.write('''In general,  although men are stopped a lot more than women the discovery rate is usually around the same for both groups, i.e, from the stopped people, the same proportion of men and women have been caught committing offences. Nationwide, the percentage of men and women stopped who are actually found to be practising some offence is around 20%.''')
+		st.image('images/Global Discovery rate per gender.png','Global Discovery rate per gender.')
+		st.write(''' Some stations have higher discovery rates for men like city-of-london, Durham or surrey where the difference for women is around 7-9%.  Other stations report a slightly higher number of discoveries for women like Northumbria or the transport police but the difference is only about 2% compared to men.''')
+
+		st.write('#### Ethnicity')
+		st.write('''According to the UK census data from 2011 the frequency of white people in the UK is around 87%, black people around 3% and asians 5%. This is even more evident in Whales, Scotland and Northern Ireland where the representativity of white people surpasses the 95% mark. If we consider all the data it is very clear that black and Asian minorities are overrepresented when compared to census data - 26% for black and 13% for asian. However, when we exclude the metropolitan station get a lot closer to census with 10% for black and 8% for asians only. When analysing the discovery rate, excluding the metropolitan station, we see that the proportion of offences is very similar in all ethnic groups.''')
+		st.image('images/Officer defined ethnic groups success rates and other offences rates.png','Officer defined ethnic groups success rates and other offences rates',width=500)
+		st.write('''We couldn’t find any obvious evidence in regards to what constitutes our positive class. Within stations we find some the maximum discovery rate discrepancy between ethnic groups to be 22% but the average difference nationwide is 7%.''')
+		st.image('images/Nationwide  maximum and average differences per sub groups..png','Nationwide maximum and average differences per sub groups.',width=300)
+
+		st.write('#### Age Range')
+		st.write('''People in the age range are stopped at a higher rate and also seem to have a higher discovery rate than the other age groups. However the difference between these 2 metrics perhaps implies that there might be a discrimination issue with this age range.We also noticed that people over 34 have been issued penalties a lot more frequently than the other groups that are more likely to get issued mere caution notices. When looking at the distribution of offences per station it seems that there aren’t significant differences  on all stations.''')
+		st.image('images/Age range groups success rate and several other offences rates.png','Age range groups success rate and several other offences rates',width=500)
+
+		st.write('''#### Removal of more than outer clothes''')
+		st.write('''It is very infrequent for removal of outer clothing to be done. It is slightly more likely to happen to women than men - 4.1% vs 3,4%. It was interesting to verify that to the people asked to remove more than outer clothing, the discovery rate actually increases to 30%. Addressing the specific question of this being asked to certain females' age groups rather than others, we verify that indeed it is a lot more frequent for women in the range over 34 to be asked to remove outer clothing.''')
+		st.image('images/% removal of outer clothing asked to women per age range.png','% removal of outer clothing asked to women per age range.', width=200)
+
+		# outer_cloth=img_to_bytes('images/% removal of outer clothing asked to women per age range.png')
+		# st.write(img_html.format({outer_cloth},{'% removal of outer clothing asked to women per age range.png'}),unsafe_allow_html=True)
+		# st.markdown('''<figure>
+		# 		<img src=data:image/png;base64,{} style= width:40% float: right class='img-fluid'>
+		# 		<figcaption style=font-size:11 display: block>% removal of outer clothing asked to women per age range.</figcaption>
+		# 	</figure>'''.format(outer_cloth),unsafe_allow_html=True)
 
 
 

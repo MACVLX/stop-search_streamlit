@@ -1,3 +1,6 @@
+import streamlit as st
+
+
 valid_category_map = {
         "Type": [None,'Person search', 'Person and Vehicle search', 'Vehicle search'],
         'Part of a policing operation':[None, True, False],
@@ -39,3 +42,5 @@ valid_category_map = {
                         'Seals or hunting equipment'],
 'station':[None,'devon-and-cornwall', 'dyfed-powys', 'derbyshire', 'bedfordshire', 'avon-and-somerset', 'cheshire', 'sussex', 'north-yorkshire', 'cleveland', 'merseyside', 'north-wales', 'wiltshire', 'norfolk', 'suffolk', 'thames-valley', 'durham', 'warwickshire', 'leicestershire', 'hertfordshire', 'cumbria', 'metropolitan', 'essex', 'south-yorkshire', 'surrey', 'staffordshire', 'northamptonshire', 'northumbria', 'city-of-london', 'nottinghamshire', 'gloucestershire', 'cambridgeshire', 'lincolnshire', 'btp', 'west-yorkshire', 'dorset', 'west-mercia', 'kent', 'hampshire', 'humberside', 'lancashire', 'greater-manchester', 'gwent']
 }
+
+
