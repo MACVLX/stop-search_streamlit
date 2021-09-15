@@ -3,8 +3,8 @@ import streamlit as st
 
 
 html_temp = """
-		<div style="background-color:#FFCE54;padding:10px;border-radius:10px">
-		<h1 style="color:white;text-align:center;">Stop & Search UK app</h1>
+		<div style="background-color:#3FB8AF;padding:10px;border-radius:10px">
+		<h1 style="color:black;text-align:center;">{}</h1>
 		</div>
 		"""
 # html_temp = """
@@ -75,7 +75,7 @@ position: fixed;
 left: 0;
 bottom: 0;
 width: 100%;
-background-color: white;
+background-color: #f0f0f0;
 color: black;
 text-align: center;
 font-size: xx-small;
@@ -84,8 +84,7 @@ font-size: xx-small;
 </style>
 <div class="footer"; >
 <a style='display: block; text-align: center;' 
- target="_blank">Developed by Miguel Vieira</a>
-<a>with contributions from:</a>
+ target="_blank">Developed by Miguel Vieira with contributions from:</a>
 <a style='display: block; text-align: center;' target="_blank", href='https://github.com/rafaelloni/EAT_app'>https://github.com/rafaelloni/EAT_app</a>
 <a style='display: block; text-align: center;' target="_blank", href='https://github.com/upraneelnihar/streamlit-multiapps'>https://github.com/upraneelnihar/streamlit-multiapps</a>
 </div>

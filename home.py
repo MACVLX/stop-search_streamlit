@@ -69,218 +69,27 @@ def load_train_df():
 def main():
 	
 	
-	st.markdown(html_temp,unsafe_allow_html=True)
+	st.markdown(html_temp.format('Stop & Search UK app'),unsafe_allow_html=True)
 	st.sidebar.markdown(footer,unsafe_allow_html=True)
+	st.write('')
+	st.write('')
 
+	with st.expander('Project Summary'):
+		# st.write('#### Summary')
+		st.markdown('''Stop and Search operations are an important and controversial component of daily policing strategies in the United Kingdom (UK) recently receiving a fair amount of public criticism. Together with the help of the IT police Department, this project will address these concerns by investigating any evidence of wrongdoing, abuses or discrimination of minority or social sensitive groups by the authorities and will attempt to propose a decision-making model designed to aid police officers in selecting to search only when there is a high likelihood of success. In summary, the two major tasks this enterprise aims to deliver can be summarized in:''')
 
-	# 	st.markdown("""
-	# <div style="background-color:silver;overflow-x: auto; padding:10px;border-radius:5px;margin:10px;">
-	# 	<h3 style="text-align:justify;color:black;padding:10px">Project overview</h3>
-	# 	<p>A summary of the project premisses, objectives and requirements.</p>
-	# </div>
-	# """,unsafe_allow_html=True)
-		# st.image(load_image('images/hepimage.jpeg'))
-
-
-	# elif choice == "EDA":
-	# 	st.write('gg')
-
-		# with st.sidebar.expander('Basic exploratory analysis options'):
-		# try:
-		# 	with st.spinner('Loading data....'):
-		# 		df = load_train_df()				
-		# except:
-		# 	st.error('csv file upload error')
-		# else:
-		# 	EA = ExploratoryAnalysis(df)
-		# 	st.sidebar.markdown('#### Exploratory analysis')
-		# 	features=st.sidebar.radio("",['Head','Info','Data entry issues','Unique values and frequency',  'Gender, Ethnicity and Age', 'Lat & Long'])
-		# 	# basics = st.sidebar.radio('',('Head','Describe','Info','Data entry issues'))
-		# 	if features == 'Head':
-		# 		st.subheader('Dataframe head:')
-		# 		st.write(df.head(20))
-		# 		st.markdown("For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country. This dataset is composed of features that can be used for modelling -  'Type', 'Date', 'Part of a policing operation', 'Latitude', 'Longitude', 'Gender', 'Age range', 'Self-defined ethnicity', 'Officer-defined ethnicity', 'Legislation','Object of search', 'station' - by features which will be used to build a classification target given there isn’t a specific ‘target’ or ‘ label’ feature - 'Outcome', 'Outcome linked to object of search' - and by the feature  'Removal of more than just outer clothing',  to be used in the analysis only. As previously mentioned a search is considered successful if the outcome is positive and is related to the search. Except for ‘Latitude’ and ‘Longitude’, all the others are categorical variables.")
-			
-		# 	elif features =='Info':
-		# 		st.subheader('Dataframe informations:')
-		# 		st.text(EA.info())
-		# 	# elif basics =='Isnull':
-		# 	# 	st.subheader('Null occurrences')
-		# 	# 	st.write(df.isnull().sum())
-		# 	elif features == 'Unique values and frequency':
-		# 		col = st.selectbox('Choose a column for see unique values',EA.columns)
-		# 		st.subheader('Unique values and frequency')
-		# 		st.write(EA.info2(col))
-		# 	elif features == 'Data entry issues':
-		# 		st.write('Data entry issues')
-		# 		st.image('images/overhaul_nulls.png')
-		# 		st.markdown('There seems to be some issues regarding data entries although in general most of the dataset is quite well populated. Maybe not surprisingly, the London metropolitan station accounts for more than 50% of all the data points in this dataset.')
-		# 		st.markdown('In regards to missing data across all stations, the columns ‘Outcome linked to object of search’ and ‘Removal of more than just outer clothing’ are the most affected')
-		# 		st.image('images/%_nulls.png')
-		# 		st.markdown("A more granular analysis by police station allows for in depth appraisal of the reality of record keeping per  station (Annex 3). Some stations are top exemplar  - essex, suffolk, sussex, northamptonshire, norfolk and gloucester - with near 0% of data missing whereas other stations like thames-valley, lancashire and dyfed-powys have severe data keeping records with more than 30% of data missing, particularly in respect to geolocation, information if it was part of police operation and the two above mentioned categories. The most severe issue pertaining to missing data is related to the feature ‘Outcome linked to object of search’ in the metropolitan station. There is no data at all, which will disallow these data points to be included in any modelling attempt and impair any statistical analysis related to outcome in this important area of the country. The station gwent and humberside also have no data in this feature. Another worrying fact related to this project is the almost entire lack of report regarding the removal of outer clothing. Some stations like gwent, cleveland, north-yorkshire, metropolitan and surrey do not report this information  at all and many others have less than 50% reporting in this category. For some columns it makes sense to infer the missing data, for example in ‘Outcome linked to object of search’ any missing values are most likely to be False since officers tend to forget to go back to the application.There seems to be a substantial amount of records where ‘Outcome’ is negative but the column ‘Outcome linked to the object of search is True. This indicates potential compromise when training any model as these data points may be of no use. In figure 3 we can clearly see that some stations (warwickshire,btp,west-yorkshire and derbyshire) have more than 50% of observations with this mismatch. As mentioned the features ‘Outcome’ and 'Outcome linked to object of search' will be used to build our target labels for binary classification. The latter is a boolean feature with True or False values. The Outcome feature is a wide range of consequences from arrestas to penalties or mere caution but the vast majority is that no action was taken.  After constructing the target feature we achieve an imbalanced dataset where the positive outcome accounts for approximately 20% of the observations. By removing the stations where the target is not possible to be constructed (metropolitan, gwent and humberside) the  final data set is only 46% of the original data.")
-
-		# 	elif features == 'Gender, Ethnicity and Age':
-		# 		st.write("Gender, Ethnicity and Age groups distribution of stops can be seen in the chart below. The Gender feature has 3 categories: Female, Male and Other. Given that the representativity of ‘other’ is extremely low in the dataset (less than 0.001%) we will exclude this from our analysis and modelling. There is an over representativity of Male compared to Female. Females account for little more than 8% but if the metropolitan station is removed then it increases slightly to more than 10%. In regards to Ethnic groups we have 2 different features: Officer defined and self-defined. For modelling purposes it only makes sense to use the Officer-defined feature as this is the only information present prior to any decision making. By far the majority is composed of ‘white’ subgroups making white man the most stopped.The age brackets recorded show a majority of young adults between 18 and 34 years old. Possibly of concern is the fact that there are 384 occurrences of children aged less than 10 years old.")
-		# 		st.image('images/stops_per_group.png')
-		# 		st.write("In regards to ethnicity we also investigated if there was any significant discrepancy between Officer-defined  and self-defined reported values.  Although not significant, it seems that officers tend to dismiss the categories 'Mixed' and 'Other' , distributing them more across 'White' and 'Black' categories")
-		# 		st.image('images/Match between self-defined and police-defined ethnicity.png')
-		# 	elif features == 'Lat & Long':
-		# 		st.subheader('Coordinates of operations')
-		# 		# Calculate the timerange for the slider
-				
-		# 		df=df.rename(columns={'Latitude':'lat','Longitude':'lon'})
-		# 		df_coord=df[(~df.lat.isna()) & (~df.lon.isna())]
-		# 		# # Calculate the timerange for the slider
-				
-		# 		df_coord['Date'] = pd.to_datetime(df_coord['Date']).dt.date
-				
-
-		# 		min_ts = df_coord['Date'].min()#.date()
-		# 		max_ts = df_coord['Date'].max()#.date()
-				
-
-		# 		# st.subheader("Inputs")
-		# 		min_selection, max_selection = st.slider(
-		# 			"Timeline", min_value=min_ts, max_value=max_ts, value=[min_ts, max_ts])
-		# 		# # Filter Data based on selection
-		# 		st.write(f"Filtering between {min_ts} & {max_ts}")
-		# 		time_data = df_coord[
-		# 			(df_coord["Date"] >= min_selection) & (df_coord["Date"] <= max_selection)
-		# 		]
-				
-		# 		st.map(time_data)
-
-
-
-
-
-		# df['Outcome'].value_counts().plot(kind='bar')
-		# st.pyplot()	
-
-	# 				# Freq Dist Plot
-	# 				freq_df = pd.read_csv("data/freq_df_hepatitis_dataset.csv")
-	# 				st.bar_chart(freq_df['count'])
-
-
-	# 				if st.checkbox("Area Chart"):
-	# 					all_columns = df.columns.to_list()
-	# 					feat_choices = st.multiselect("Choose a Feature",all_columns)
-	# 					new_df = df[feat_choices]
-	# 					st.area_chart(new_df)
-						
-
-
-	# elif choice == "Use Model":
-
-
-		# st.subheader("Predictive Analytics")
-		# with st.form("my_form"):
-		# 	id = st.text_input("observation id")
-			
-		# 	type = st.selectbox("Type",valid_category_map.get('Type'))
-		# 	today = datetime.date.today()
-		# 	try:
-		# 		date = st.date_input("Date",today)
-		# 		date = date.strftime("%m/%d/%Y")
-		# 	except:
-		# 		st.error('Incorrect or missing date.')
-			
-		# 	Part_policing_operation=st.selectbox('Part of a policing operation',valid_category_map.get('Part of a policing operation'))
-			
-		# 	latitude = st.number_input("Latitude",format='%8.6f')
-		# 	if latitude == 0.0000:
-		# 		latitude = None
-			
-		# 	longitude = st.number_input("Longitude",format='%8.6f')
-		# 	if longitude == 0.0000:
-		# 		longitude = None
-			
-		# 	Gender = st.selectbox('Gender',valid_category_map.get('Gender'))
-		# 	Age_range = st.selectbox('Age range',valid_category_map.get('Age range'))
-		# 	Officer_defined_ethnicity=st.selectbox('Officer-defined ethnicity',valid_category_map.get('Officer-defined ethnicity'))
-		# 	Legislation=st.selectbox('Legislation',valid_category_map.get('Legislation'))
-		# 	Object_search=st.selectbox('Object of search',valid_category_map.get('Object of search'))
-		# 	station=st.selectbox('station',valid_category_map.get('station'))
-
-		# 	# Every form must have a submit button.
-		# 	submitted = st.form_submit_button("Advice")
-		# 	if submitted:
-		# 		columns, pipeline, dtypes = load_model()
-		# 		observation = {
-		# 			'Type': type,
-        # 			'Date': date,
-        # 			'Part_policing_operation': Part_policing_operation,
-        # 			'Latitude' : latitude,
-        # 			'Longitude' : longitude,
-        # 			'Gender' : Gender,
-        # 			'Age range' : Age_range,
-        # 			'Officer-defined ethnicity' : Officer_defined_ethnicity,
-        #             'Legislation' : Legislation,
-        # 			'Object of search' : Object_search,
-        # 			'station' : station
-		# 		}
-
-
-		# 		obs = pd.DataFrame([observation], columns=columns).astype(dtypes)
-		# 		proba = pipeline.predict_proba(obs)[0, 1]
-
-		# 		proba
-		# 		prediction = pipeline.predict(obs)[0]
-		# 		prediction
-				# prediction=bool(prediction)
-
-
-	# 					# st.write(prediction)
-	# 					# prediction_label = {"Die":1,"Live":2}
-	# 					# final_result = get_key(prediction,prediction_label)
-	# 					if prediction == 1:
-	# 						st.warning("Patient Dies")
-	# 						pred_probability_score = {"Die":pred_prob[0][0]*100,"Live":pred_prob[0][1]*100}
-	# 						st.subheader("Prediction Probability Score using {}".format(model_choice))
-	# 						st.json(pred_probability_score)
-	# 						st.subheader("Prescriptive Analytics")
-	# 						st.markdown(prescriptive_message_temp,unsafe_allow_html=True)
-							
-	# 					else:
-	# 						st.success("Patient Lives")
-	# 						pred_probability_score = {"Die":pred_prob[0][0]*100,"Live":pred_prob[0][1]*100}
-	# 						st.subheader("Prediction Probability Score using {}".format(model_choice))
-	# 						st.json(pred_probability_score)
-							
-	# 				if st.checkbox("Interpret"):
-	# 					if model_choice == "KNN":
-	# 						loaded_model = load_model("models/knn_hepB_model.pkl")
-							
-	# 					elif model_choice == "DecisionTree":
-	# 						loaded_model = load_model("models/decision_tree_clf_hepB_model.pkl")
-							
-	# 					else:
-	# 						loaded_model = load_model("models/logistic_regression_hepB_model.pkl")
-							
-
-	# 						# loaded_model = load_model("models/logistic_regression_model.pkl")							
-	# 						# 1 Die and 2 Live
-	# 						df = pd.read_csv("data/clean_hepatitis_dataset.csv")
-	# 						x = df[['age', 'sex', 'steroid', 'antivirals','fatigue','spiders', 'ascites','varices', 'bilirubin', 'alk_phosphate', 'sgot', 'albumin', 'protime','histology']]
-	# 						feature_names = ['age', 'sex', 'steroid', 'antivirals','fatigue','spiders', 'ascites','varices', 'bilirubin', 'alk_phosphate', 'sgot', 'albumin', 'protime','histology']
-	# 						class_names = ['Die(1)','Live(2)']
-	# 						explainer = lime.lime_tabular.LimeTabularExplainer(x.values,feature_names=feature_names, class_names=class_names,discretize_continuous=True)
-	# 						# The Explainer Instance
-	# 						exp = explainer.explain_instance(np.array(feature_list), loaded_model.predict_proba,num_features=13, top_labels=1)
-	# 						exp.show_in_notebook(show_table=True, show_all=False)
-	# 						# exp.save_to_file('lime_oi.html')
-	# 						st.write(exp.as_list())
-	# 						new_exp = exp.as_list()
-	# 						label_limits = [i[0] for i in new_exp]
-	# 						# st.write(label_limits)
-	# 						label_scores = [i[1] for i in new_exp]
-	# 						plt.barh(label_limits,label_scores)
-	# 						st.pyplot()
-	# 						plt.figure(figsize=(20,10))
-	# 						fig = exp.as_pyplot_figure()
-	# 						st.pyplot()
-
-
+		
+		st.write('''* analysis of a dataset with records from a broad spectrum of police stations across the UK looking for potential evidence of discrimination towards minority groups, gender-related or age-related. Furthermore, we intend to address the highly concerning issue of police officers asking for the removal of more than outer clothing to certain groups, namely if these practices are more frequently applied to women of certain age brackets;''')
+		st.write('''* develop a model that can be easily translated into a ‘search vs no search’ advice service regarding potential stops and searches of individuals. The proposed model should be comprehensive and general enough to be applicable to all stations nationwide without significant differences in discovery rates between minority groups.''')
+	
+	with st.expander('Requirements clarifications'):
+		st.write('''The main goal of this project is to yield a model capable of uniformizing the decision to perform searches whilst trying to minimize any bias towards the different ethnic, gender and age groups within a certain police station. 
+Although many possible types of offences might be incurred in this project we will frame the task as a  binary classification problem where observations in the training data are considered successful if the outcome is positive, i.e, observations where the model should predict infractions of law are likely to be occurring,  and this outcome is related to the search.
+ We are asked to reduce the number of cases where a search does not result in a successful outcome, which, in other words, means that for the same number of people stopped the model should give a higher frequency of positive results. A general measure like accuracy is not suitable for this problem as we are dealing with an imbalanced dataset but this requirement can be translated into an analytic measure such as precision in increasing the discovery rate. However, by maximizing this it is only natural that the ability to dismiss potential offences is increased as well. This should be measured by the sensitivity/recall of the constructed model and a reasonable balance between them must be proposed. These metrics will be used to identify how many stations comply with a tolerance level of discrepancies within each group and each police station and achieve a balance between a unified policy and local possible differences. Ideally, we would seek to get the majority of stations with no more than 5-10% difference of successful discoveries within groups and between stations. 
+''')
+	with st.expander('Data Analysis'):
+		st.write('''For the task at hand, the IT Department has made available a dataset comprising 660 661 stop and search events spread throughout the country.''')
+		st.write('##### Please use the "EDA" button on the sidebar on the left to navigate through a comprehensive analysis of the data')
 
 
 
